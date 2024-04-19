@@ -18,18 +18,26 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('Rest API Call'),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: fetchUsers,
-        child: Icon(Icons.refresh),
-      ),
       body: ListView.builder(
         itemCount: users.length,
         itemBuilder: (context, index) {
+          final user = users[index];
+          final name = user['name']['first'];
+          final email = user['email'];
+          final imageUrl = user['picture']['thumbnail'];
           return ListTile(
-            title: Text(users[index]['name']['first']),
-            subtitle: Text(users[index]['email']),
+            leading: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.network(imageUrl),
+            ),
+            title: Text(name),
+            subtitle: Text(email),
           );
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: fetchUsers,
+        child: Icon(Icons.refresh),
       ),
     );
   }
